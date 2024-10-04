@@ -9,6 +9,7 @@ import OAuth from "@/components/OAuth";
 import { useSignUp } from "@clerk/clerk-expo";
 import ReactNativeModal from "react-native-modal";
 import { router } from "expo-router";
+import { fetchAPI } from "@/lib/fetch";
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -50,13 +51,21 @@ const SignUp = () => {
   const onPressVerify = async () => {
     if (!isLoaded) return;
 
+    //ADD USER TO NEON DB AND CLERK DB
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code: verification.code,
       });
 
       if (completeSignUp.status === "complete") {
-        // todo create user in db
+        await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
 
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({
