@@ -86,6 +86,7 @@ const Map = () => {
   }, [drivers]);
 
   Alert.alert(JSON.stringify(userLongitude));
+
   return (
     <MapView
       provider={PROVIDER_DEFAULT}

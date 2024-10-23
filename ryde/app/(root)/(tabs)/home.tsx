@@ -139,7 +139,7 @@ export default function Page() {
     const requestLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
 
-      if (hasPermissions !== "granted") {
+      if (!hasPermissions) {
         setHasPermissions(false);
         return;
       }
