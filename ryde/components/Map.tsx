@@ -85,8 +85,6 @@ const Map = () => {
     }
   }, [drivers]);
 
-  Alert.alert(JSON.stringify(userLongitude));
-
   return (
     <MapView
       provider={PROVIDER_DEFAULT}
@@ -95,7 +93,7 @@ const Map = () => {
       mapType="mutedStandard"
       showsPointsOfInterest={false}
       initialRegion={region}
-      //showsUserLocation={true}
+      showsUserLocation={true}
       userInterfaceStyle="light"
     >
       {markers?.map((marker) => (
